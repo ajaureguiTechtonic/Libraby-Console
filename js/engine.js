@@ -9,29 +9,24 @@ var testBook4 = new Book('sand dunes','sir-mix-a-lot', 499, 205);
 var testBook5 = new Book('101 jokes','smarty party', 101, 2009);
 var allBooks = [testBook1, testBook2, testBook3, testBook4, testBook5];
 
-Library.prototype.addBook = function(book) {
-  var book = new Book();
-  if((gLibrary.bookShelf).includes(book)) {
+Library.prototype.addBook = function(oBook) {
+  if((this.bookShelf).includes(oBook)) {
     return false
   } else {
-    gLibrary.bookShelf.push(book);
+    this.bookShelf.push(oBook);
     return true
   }
 };
 
-//filter through bookshelf to find book with matching getBooksByTitle, take the object in the array that is returned and remove all matches that have the same title from the bookshelf using the appropiate method -- slice() or splice()?
 Library.prototype.removeBookByTitle = function(title) {
-  var booksToRemove = (gLibrary.bookShelf).filter(function(el) {
-    return el.title === title
-  })
-    for(var i = 0; i < (gLibrary.bookShelf).length; i++) {
-      if(gLibrary.bookShelf[i].title === title) {
-        gLibrary.bookShelf.splice(gLibrary.bookShelf[i], 1);
-        return true
-      } else {
-        return false
-      }
+  for(var i = 0; i < this.bookShelf.length; i++) {
+    if(this.bookShelf[i].title === title) {
+      var removeThis = this.bookShelf[i];
+      this.bookShelf.splice(this.bookShelf.indexOf(removeThis), 1);
+      return true
     }
+  }
+  return false;
 };
 
 Library.prototype.removeBooksByAuthor = function(authorName) {
