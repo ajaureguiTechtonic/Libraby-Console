@@ -10,19 +10,20 @@ var testBook5 = new Book('101 jokes','smarty party', 101, 2009);
 var allBooks = [testBook1, testBook2, testBook3, testBook4, testBook5];
 
 Library.prototype.addBook = function(oBook) {
-  if((this.bookShelf).includes(oBook)) {
-    return false
-  } else {
-    this.bookShelf.push(oBook);
-    return true
+  for(var i = 0; i < this.bookShelf.length; i++) {
+    if(this.bookShelf[i].title === oBook.title) {
+      return false
+    }
   }
+  this.bookShelf.push(oBook);
+  return true;
 };
 
 Library.prototype.removeBookByTitle = function(title) {
   for(var i = 0; i < this.bookShelf.length; i++) {
     if(this.bookShelf[i].title === title) {
-      var removeThis = this.bookShelf[i];
-      this.bookShelf.splice(this.bookShelf.indexOf(removeThis), 1);
+      var bookToRemove = this.bookShelf[i];
+      this.bookShelf.splice(this.bookShelf.indexOf(bookToRemove), 1);
       return true
     }
   }
