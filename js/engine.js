@@ -41,16 +41,28 @@ Library.prototype.removeBooksByAuthor = function(authorName) {
   if(booksToRemove.length) {
     this.bookShelf = booksToKeep;
     return true
-  }  
+  }
   return false
 };
 
 Library.prototype.getRandomBook = function() {
-
+   if(!this.bookShelf.length) {
+     return null;
+   }
+   return this.bookShelf[Math.floor(Math.random()*this.bookShelf.length)];
 };
 
 Library.prototype.getBooksByTitle = function(title) {
-
+  var matchingBooks = this.bookShelf.filter(function(book) {
+    return book.title.indexOf(title) > -1;
+  })
+  return matchingBooks;
+  
+//SOLUTION USES .includes() WHICH IS ES6
+  // var matchingBooks = this.bookShelf.filter(function(book) {
+  //   return book.title.includes(title)
+  // })
+  // return matchingBooks
 };
 
 Library.prototype.getBooksByAuthor = function(authorName) {
