@@ -8,8 +8,11 @@ var testBook3 = new Book('marvelous mag pie','randy-rum', 566, 2012);
 var testBook4 = new Book('sand dunes','sir-mix-a-lot', 499, 205);
 var testBook5 = new Book('101 jokes','smarty party', 101, 2009);
 var testBook6 = new Book('a penny for your thoughts','randy-rum', 256, 2010);
-var allBooks = [testBook1, testBook2, testBook3, testBook4, testBook5, testBook6];
+var testBook7 = new Book('my favorite things', 'oprah', 300, 2018);
+var testBook8 = new Book('O the autobiography', 'oprah', 345, 2016);
+var allBooks = [testBook1, testBook2, testBook3, testBook4, testBook5, testBook6, testBook7, testBook8];
 var allBooks2 = [testBook2, testBook3, testBook6];
+var testBooksArray3 = [new Book('mobey dick', 'h-m', 790, 2003), new Book('it', 's-k', 345, 2001)];
 
 Library.prototype.addBook = function(oBook) {
   for(var i = 0; i < this.bookShelf.length; i++) {
@@ -58,13 +61,13 @@ Library.prototype.getBooksByTitle = function(title) {
     return book.title.indexOf(title) > -1;
   })
   return matchingBooks;
+};
 
 //SOLUTION USES .includes() WHICH IS ES6
   // var matchingBooks = this.bookShelf.filter(function(book) {
   //   return book.title.includes(title)
   // })
   // return matchingBooks
-};
 
 Library.prototype.getBooksByAuthor = function(authorName) {
   var matchingAuthor = this.bookShelf.filter(function(book) {
@@ -73,42 +76,33 @@ Library.prototype.getBooksByAuthor = function(authorName) {
   return matchingAuthor;
 };
 
-// function removeDuplicates(array) {
-//   var newArray = array.concat();
-//   for(var i = 0; i < newArray.length; ++i) {
-//     for(var j = i + 1; j < newArray.length; ++j) {
-//       if(newArray[i] === a[j]) {
-//         newArray.splice(j--, 1)
-//       }
-//     }
-//   }
-//   return newArray;
-// }
-
-
-//take in array of book objects and add them to the bookShelf
-//need to loop through the array of new books and use addBook function for each individual book
-//if book was successfully added increase booksAddedcount
 Library.prototype.addBooks = function(aBooks) {
   var booksAddedCount = 0;
   for(var i = 0; i < aBooks.length; i++) {
-    this.addBook(aBooks[i]);
-    for(var j = 0; j < this.bookShelf.length; j++) {
-      if(aBooks[i].title !== this.bookShelf[j].title) {
-        console.log(aBooks[i]);
-        booksAddedCount++
-      }
+    if (this.addBook(aBooks[i])) {
+      booksAddedCount++
     }
   }
   return booksAddedCount;
 };
 
 Library.prototype.getAuthors = function() {
-
+  var listOfAuthors = this.bookShelf.map(function(book) {
+    return book.author
+  });
+  var allAuthors = listOfAuthors.filter(function(author, i) {
+    //if the index being returned is smaller than the current index that means instance already exists, otherwise we will add it to the array, need to return indexOf only >.
+    return listOfAuthors.indexOf(author) >= i
+  })
+  return allAuthors;
 };
 
 Library.prototype.getRandomAuthorName = function() {
-
+  var authors = this.getAuthors();
+  if(authors.length) {
+    return authors[Math.floor(Math.random() * authors.length)];
+  }
+  return null;
 };
 
 document.addEventListener('DOMContentLoaded', function(e) {
@@ -122,4 +116,4 @@ function addAllBooks(books) {
   })
 }
 
-// setTimeout(function(){ console.log(gLibrary.bookShelf);}, 500);
+setTimeout(function(){ console.log(gLibrary.bookShelf);}, 500);
