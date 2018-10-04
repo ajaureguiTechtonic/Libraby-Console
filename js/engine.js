@@ -115,7 +115,6 @@ Library.prototype.retrieveLocalStorage = function() {
   if(localStorage.length) {
     var parsedLocalStorageLibrary = JSON.parse(localStorage.getItem('Library'))
     for(var i = 0; i < parsedLocalStorageLibrary.length; i++) {
-      console.log(parsedLocalStorageLibrary[i].title);
       this.addBook(new Book(
         parsedLocalStorageLibrary[i].title,
         parsedLocalStorageLibrary[i].author,
@@ -128,14 +127,8 @@ Library.prototype.retrieveLocalStorage = function() {
 
 document.addEventListener('DOMContentLoaded', function(e) {
   window.gLibrary = new Library();
-  // addAllBooks(allBooks);
   gLibrary.retrieveLocalStorage();
 })
 
-// function addAllBooks(books) {
-//   books.forEach(function(e) {
-//     (gLibrary.bookShelf).push(e)
-//   })
-// }
 
 setTimeout(function(){ console.log(gLibrary.bookShelf);}, 500);
