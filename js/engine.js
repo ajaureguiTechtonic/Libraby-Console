@@ -114,10 +114,16 @@ Library.prototype.setLocalStorage = function() {
 Library.prototype.retrieveLocalStorage = function() {
   if(localStorage.length) {
     var parsedLocalStorageLibrary = JSON.parse(localStorage.getItem('Library'))
-    this.bookShelf.push(parsedLocalStorageLibrary)
+    for(var i = 0; i < parsedLocalStorageLibrary.length; i++) {
+      console.log(parsedLocalStorageLibrary[i].title);
+      this.addBook(new Book(
+        parsedLocalStorageLibrary[i].title,
+        parsedLocalStorageLibrary[i].author,
+        parsedLocalStorageLibrary[i].numPages,
+        parsedLocalStorageLibrary[i].pubDate
+      ))
+    }
   }
-  console.log(parsedLocalStorageLibrary);
-  console.log(this.bookShelf, 'this');
 }
 
 document.addEventListener('DOMContentLoaded', function(e) {
