@@ -92,8 +92,8 @@ Library.prototype.getAuthors = function() {
   var listOfAuthors = this.bookShelf.map(function(book) {
     return book.author
   });
+  //if the index being returned is smaller than the current index that means instance already exists, otherwise we will add it to the array, need to return indexOf only >.
   var allAuthors = listOfAuthors.filter(function(author, i) {
-    //if the index being returned is smaller than the current index that means instance already exists, otherwise we will add it to the array, need to return indexOf only >.
     return listOfAuthors.indexOf(author) >= i
   })
   return allAuthors;
@@ -105,6 +105,30 @@ Library.prototype.getRandomAuthorName = function() {
     return authors[Math.floor(Math.random() * authors.length)];
   }
   return null;
+};
+
+//need to be able to take an input value and return an array of books that has anything that matches; title, author, numPages, pubDate
+//take the query and check it against books existing on the bookShelf
+
+Library.prototype.bookSearch = function(searchQuery) {
+  var searchMatches = [];
+
+  for(var i = 0; i < this.bookShelf.length; i++) {
+    console.log(this.bookShelf[i].title);
+    if(this.bookShelf[i].title.indexOf(searchQuery) > -1) {
+      searchMatches.push(this.bookShelf[i])
+    }
+    if(this.bookShelf[i].author.indexOf(searchQuery) > -1) {
+      searchMatches.push(this.bookShelf[i])
+    }
+    if(this.bookShelf[i].numPages.indexOf(searchQuery) > -1) {
+      searchMatches.push(this.bookShelf[i])
+    }
+    if(this.bookShelf[i].pubDate.indexOf(searchQuery) > -1) {
+      searchMatches.push(this.bookShelf[i])
+    }
+  }
+  return searchMatches;
 };
 
 Library.prototype.setLocalStorage = function() {
