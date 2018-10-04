@@ -9,6 +9,7 @@ var testBook4 = new Book('sand dunes','sir-mix-a-lot', 499, 205);
 var testBook5 = new Book('101 jokes','smarty party', 101, 2009);
 var testBook6 = new Book('a penny for your thoughts','randy-rum', 256, 2010);
 var allBooks = [testBook1, testBook2, testBook3, testBook4, testBook5, testBook6];
+var allBooks2 = [testBook2, testBook3, testBook6];
 
 Library.prototype.addBook = function(oBook) {
   for(var i = 0; i < this.bookShelf.length; i++) {
@@ -57,7 +58,7 @@ Library.prototype.getBooksByTitle = function(title) {
     return book.title.indexOf(title) > -1;
   })
   return matchingBooks;
-  
+
 //SOLUTION USES .includes() WHICH IS ES6
   // var matchingBooks = this.bookShelf.filter(function(book) {
   //   return book.title.includes(title)
@@ -66,11 +67,40 @@ Library.prototype.getBooksByTitle = function(title) {
 };
 
 Library.prototype.getBooksByAuthor = function(authorName) {
-
+  var matchingAuthor = this.bookShelf.filter(function(book) {
+    return book.author.indexOf(authorName) > -1;
+  })
+  return matchingAuthor;
 };
 
-Library.prototype.addBooks = function(aBooks) {
+// function removeDuplicates(array) {
+//   var newArray = array.concat();
+//   for(var i = 0; i < newArray.length; ++i) {
+//     for(var j = i + 1; j < newArray.length; ++j) {
+//       if(newArray[i] === a[j]) {
+//         newArray.splice(j--, 1)
+//       }
+//     }
+//   }
+//   return newArray;
+// }
 
+
+//take in array of book objects and add them to the bookShelf
+//need to loop through the array of new books and use addBook function for each individual book
+//if book was successfully added increase booksAddedcount
+Library.prototype.addBooks = function(aBooks) {
+  var booksAddedCount = 0;
+  for(var i = 0; i < aBooks.length; i++) {
+    this.addBook(aBooks[i]);
+    for(var j = 0; j < this.bookShelf.length; j++) {
+      if(aBooks[i].title !== this.bookShelf[j].title) {
+        console.log(aBooks[i]);
+        booksAddedCount++
+      }
+    }
+  }
+  return booksAddedCount;
 };
 
 Library.prototype.getAuthors = function() {
@@ -83,7 +113,7 @@ Library.prototype.getRandomAuthorName = function() {
 
 document.addEventListener('DOMContentLoaded', function(e) {
   window.gLibrary = new Library();
-  addAllBooks(allBooks);
+  // addAllBooks(allBooks);
 })
 
 function addAllBooks(books) {
