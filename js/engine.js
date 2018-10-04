@@ -22,6 +22,7 @@ Library.prototype.addBook = function(oBook) {
     }
   }
   this.bookShelf.push(oBook);
+  this.setLocalStorage();
   return true;
 };
 
@@ -106,15 +107,29 @@ Library.prototype.getRandomAuthorName = function() {
   return null;
 };
 
+Library.prototype.setLocalStorage = function() {
+  localStorage.setItem('Library', JSON.stringify(this.bookShelf))
+}
+
+Library.prototype.retrieveLocalStorage = function() {
+  if(localStorage.length) {
+    var parsedLocalStorageLibrary = JSON.parse(localStorage.getItem('Library'))
+    this.bookShelf.push(parsedLocalStorageLibrary)
+  }
+  console.log(parsedLocalStorageLibrary);
+  console.log(this.bookShelf, 'this');
+}
+
 document.addEventListener('DOMContentLoaded', function(e) {
   window.gLibrary = new Library();
-  addAllBooks(allBooks);
+  // addAllBooks(allBooks);
+  gLibrary.retrieveLocalStorage();
 })
 
-function addAllBooks(books) {
-  books.forEach(function(e) {
-    (gLibrary.bookShelf).push(e)
-  })
-}
+// function addAllBooks(books) {
+//   books.forEach(function(e) {
+//     (gLibrary.bookShelf).push(e)
+//   })
+// }
 
 setTimeout(function(){ console.log(gLibrary.bookShelf);}, 500);
