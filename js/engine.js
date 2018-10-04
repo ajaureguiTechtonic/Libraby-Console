@@ -10,6 +10,7 @@ var testBook5 = new Book('101 jokes','smarty party', 101, 2009);
 var testBook6 = new Book('a penny for your thoughts','randy-rum', 256, 2010);
 var testBook7 = new Book('my favorite things', 'oprah', 300, 2018);
 var testBook8 = new Book('O the autobiography', 'oprah', 345, 2016);
+var testBook9 = new Book('my girl', 'annonymous', 48, 2017);
 var allBooks = [testBook1, testBook2, testBook3, testBook4, testBook5, testBook6, testBook7, testBook8];
 var allBooks2 = [testBook2, testBook3, testBook6];
 var testBooksArray3 = [new Book('mobey dick', 'h-m', 790, 2003), new Book('it', 's-k', 345, 2001)];
@@ -107,7 +108,7 @@ Library.prototype.getRandomAuthorName = function() {
 
 document.addEventListener('DOMContentLoaded', function(e) {
   window.gLibrary = new Library();
-  // addAllBooks(allBooks);
+  addAllBooks(allBooks);
 })
 
 function addAllBooks(books) {
