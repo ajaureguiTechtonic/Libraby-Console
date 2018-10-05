@@ -13,7 +13,7 @@ var testBook8 = new Book('O the autobiography', 'oprah', 345, 2016);
 var testBook9 = new Book('my girl', 'annonymous', 48, 2017);
 var allBooks = [testBook1, testBook2, testBook3, testBook4, testBook5, testBook6, testBook7, testBook8];
 var allBooks2 = [testBook2, testBook3, testBook6];
-var testBooksArray3 = [new Book('mobey dick', 'h-m', 790, 2003), new Book('it', 's-k', 345, 2001)];
+var testBooksArray3 = [new Book('moby dick', 'h-m', 790, 2003), new Book('it', 's-k', 345, 2001)];
 
 Library.prototype.addBook = function(oBook) {
   for(var i = 0; i < this.bookShelf.length; i++) {
@@ -27,6 +27,7 @@ Library.prototype.addBook = function(oBook) {
 };
 
 Library.prototype.removeBookByTitle = function(title) {
+  var title = title.toLowerCase();
   for(var i = 0; i < this.bookShelf.length; i++) {
     if(this.bookShelf[i].title === title) {
       var bookToRemove = this.bookShelf[i];
@@ -38,6 +39,7 @@ Library.prototype.removeBookByTitle = function(title) {
 };
 
 Library.prototype.removeBooksByAuthor = function(authorName) {
+  var authorName = authorName.toLowerCase();
   var booksToKeep = this.bookShelf.filter(function(book) {
     return book.author !== authorName;
   })
@@ -55,7 +57,7 @@ Library.prototype.getRandomBook = function() {
    if(!this.bookShelf.length) {
      return null;
    }
-   return this.bookShelf[Math.floor(Math.random()*this.bookShelf.length)];
+   return this.bookShelf[Math.floor(Math.random()*this.bookShelf.length - 1)];
 };
 
 Library.prototype.getBooksByTitle = function(title) {
@@ -72,6 +74,7 @@ Library.prototype.getBooksByTitle = function(title) {
   // return matchingBooks
 
 Library.prototype.getBooksByAuthor = function(authorName) {
+  var authorName = authorName.toLowerCase();
   var matchingAuthor = this.bookShelf.filter(function(book) {
     return book.author.indexOf(authorName) > -1;
   })
@@ -92,7 +95,6 @@ Library.prototype.getAuthors = function() {
   var listOfAuthors = this.bookShelf.map(function(book) {
     return book.author
   });
-  //if the index being returned is smaller than the current index that means instance already exists, otherwise we will add it to the array, need to return indexOf only >.
   var allAuthors = listOfAuthors.filter(function(author, i) {
     return listOfAuthors.indexOf(author) >= i
   })
@@ -102,35 +104,46 @@ Library.prototype.getAuthors = function() {
 Library.prototype.getRandomAuthorName = function() {
   var authors = this.getAuthors();
   if(authors.length) {
-    return authors[Math.floor(Math.random() * authors.length)];
+    return authors[Math.floor(Math.random() * authors.length - 1)];
   }
   return null;
 };
-
-//need to be able to take an input value and return an array of books that has anything that matches; title, author, numPages, pubDate
-//take the query and check it against books existing on the bookShelf
 
 Library.prototype.bookSearch = function(searchQuery) {
   var searchMatches = [];
   var modifiedSearchQuery = searchQuery.toString().toLowerCase();
 
-  for(var i = 0; i < this.bookShelf.length; i++) {
-
-    if(this.bookShelf[i].title.indexOf(modifiedSearchQuery) > -1) {
-      searchMatches.push(this.bookShelf[i])
+  this.bookShelf.forEach(function(book) {
+    if(book.title.indexOf(modifiedSearchQuery) > -1) {
+      searchMatches.push(book)
     }
-    if(this.bookShelf[i].author.indexOf(modifiedSearchQuery) > -1) {
-      searchMatches.push(this.bookShelf[i])
+    if(book.author.indexOf(modifiedSearchQuery) > -1) {
+      searchMatches.push(book)
     }
-    if(((this.bookShelf[i].numPages).toString()).indexOf(modifiedSearchQuery) > -1) {
-      searchMatches.push(this.bookShelf[i])
+    if(((book.numPages).toString()).indexOf(modifiedSearchQuery) > -1) {
+      searchMatches.push(book)
     }
-    if(((this.bookShelf[i].pubDate).toString()).indexOf(modifiedSearchQuery) > -1) {
-      searchMatches.push(this.bookShelf[i])
+    if(((book.pubDate).toString()).indexOf(modifiedSearchQuery) > -1) {
+      searchMatches.push(book)
     }
-  }
+  })
   return searchMatches;
 };
+  // for(var i = 0; i < this.bookShelf.length; i++) {
+  //
+  //   if(this.bookShelf[i].title.indexOf(modifiedSearchQuery) > -1) {
+  //     searchMatches.push(this.bookShelf[i])
+  //   }
+  //   if(this.bookShelf[i].author.indexOf(modifiedSearchQuery) > -1) {
+  //     searchMatches.push(this.bookShelf[i])
+  //   }
+  //   if(((this.bookShelf[i].numPages).toString()).indexOf(modifiedSearchQuery) > -1) {
+  //     searchMatches.push(this.bookShelf[i])
+  //   }
+  //   if(((this.bookShelf[i].pubDate).toString()).indexOf(modifiedSearchQuery) > -1) {
+  //     searchMatches.push(this.bookShelf[i])
+  //   }
+  // }
 
 Library.prototype.setLocalStorage = function() {
   localStorage.setItem('Library', JSON.stringify(this.bookShelf))
