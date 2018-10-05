@@ -112,19 +112,20 @@ Library.prototype.getRandomAuthorName = function() {
 
 Library.prototype.bookSearch = function(searchQuery) {
   var searchMatches = [];
+  var modifiedSearchQuery = searchQuery.toString().toLowerCase();
 
   for(var i = 0; i < this.bookShelf.length; i++) {
-    console.log(this.bookShelf[i].title);
-    if(this.bookShelf[i].title.indexOf(searchQuery) > -1) {
+
+    if(this.bookShelf[i].title.indexOf(modifiedSearchQuery) > -1) {
       searchMatches.push(this.bookShelf[i])
     }
-    if(this.bookShelf[i].author.indexOf(searchQuery) > -1) {
+    if(this.bookShelf[i].author.indexOf(modifiedSearchQuery) > -1) {
       searchMatches.push(this.bookShelf[i])
     }
-    if(this.bookShelf[i].numPages.indexOf(searchQuery) > -1) {
+    if(((this.bookShelf[i].numPages).toString()).indexOf(modifiedSearchQuery) > -1) {
       searchMatches.push(this.bookShelf[i])
     }
-    if(this.bookShelf[i].pubDate.indexOf(searchQuery) > -1) {
+    if(((this.bookShelf[i].pubDate).toString()).indexOf(modifiedSearchQuery) > -1) {
       searchMatches.push(this.bookShelf[i])
     }
   }
