@@ -9,9 +9,13 @@ function Book(title, author, numPages, pubDate) {
 
 //need a check on titles to make sure that title is not overriden to a title that already exists
 Book.prototype.editBook = function(oBook) {
+  // for(var prop in gLibrary.bookShelf) {
+  //   console.log(prop);
+  // }
   this.title = oBook.title || this.title;
   this.author = oBook.author || this.author;
   this.numPages = oBook.numPages || this.numPages;
   this.pubDate = oBook.pubDate || this.pubDate;
+  gLibrary.setLocalStorage();
   return this;
 };
